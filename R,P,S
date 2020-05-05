@@ -1,0 +1,124 @@
+import random
+import os
+import sys
+import time
+
+name = input('Please write your name: ')
+# Exit Game
+
+
+def game_quit():
+    print('You are about to exit the game!')
+    exit_sure = input('Are you sure (S/N)?: ')
+
+    if exit_sure == 'S':
+        sys.exit("Thank you for Playing. See you next time!")
+    elif exit_sure == 'N':
+        return main_menu()
+    else:
+        print('Invalid Selection')
+        return game_quit()
+
+
+# Game Menu
+
+
+def main_menu():
+    print("\nHello, " + name + """\nWelcome to Rock, Paper, Scissors game.
+----Main Menu---
+Press 1 for Play.
+Press 2 for Quit.
+""")
+
+    menu_option = input('Please select option: ')
+    try:
+        menu_option_int = int(menu_option)
+        print('You have selected: ', menu_option_int)
+    except ValueError:
+        print('Invalid Selection')
+        main_menu()
+
+    if menu_option_int == 1:
+        print('Get ready to play!')
+        play_game()
+
+    elif menu_option_int == 2:
+        print(game_quit())
+
+    else:
+        print('Invalid selection')
+        return main_menu()
+
+# Game play
+
+
+def play_game():
+    print("""I'm sure you are going to loose.\n
+Pick R for Rock, P for Papper or S for Scissors."""
+          )
+    player_select = input(f'{name} selects: ')
+    time.sleep(2)
+    if player_select == 'R':
+        print('You picked Rock!')
+    if player_select == 'P':
+        print('You picked Papper!')
+    if player_select == 'S':
+        print('You picked Scissors!')
+    time.sleep(1)
+    pc_select = random.choice(['R', 'P', 'S'])
+    if pc_select == 'R':
+        print('I pick Rock!')
+    if pc_select == 'P':
+        print('I pick Papper!')
+    if pc_select == 'S':
+        print('I pick Scissors!')
+    if player_select == pc_select:
+        time.sleep(2)
+        print('It is tied!')
+        return play_game()
+    if player_select == 'R' and pc_select == 'P':
+        time.sleep(2)
+        return game_lost()
+    if player_select == 'R' and pc_select == 'S':
+        time.sleep(2)
+        return game_win()
+    if player_select == 'S' and pc_select == 'R':
+        time.sleep(2)
+        return game_lost()
+    if player_select == 'S' and pc_select == 'P':
+        time.sleep(2)
+        return game_win()
+    if player_select == 'P' and pc_select == 'R':
+        time.sleep(2)
+        return game_win()
+    if player_select == 'P' and pc_select == 'S':
+        time.sleep(2)
+        return game_lost()
+
+
+def game_win():
+    print('You won! I want the rematch!')
+    repeat_win = input('Will you give me one more (S/N)?')
+    if repeat_win == 'S':
+        print(play_game())
+    elif repeat_win == 'N':
+        return main_menu()
+    else:
+        print('Invalid Selection')
+        return game_win()
+
+
+def game_lost():
+
+    print('You lost the game!')
+    repeat_lose = input('Do you want to play again (S/N)?')
+    if repeat_lose == 'S':
+        print(play_game())
+    elif repeat_lose == 'N':
+        return main_menu()
+    else:
+        print('Invalid Selection')
+        return game_lost()
+
+
+main_menu()
